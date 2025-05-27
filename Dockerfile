@@ -1,5 +1,5 @@
 # Build stage
-FROM python:3.11-slim as builder
+FROM python:3.11-slim AS builder
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
@@ -17,15 +17,15 @@ RUN apt-get update && \
 COPY requirements.txt .
 RUN pip install --user -r requirements.txt
 
-# Copy source code
+# Copy all necessary files for package installation
 COPY flask_auth_service/ ./flask_auth_service/
-COPY setup.py setup.cfg pyproject.toml ./
+COPY setup.py setup.cfg pyproject.toml README.md LICENSE MANIFEST.in ./
 
 # Install the package
 RUN pip install --user -e .
 
 # Production stage
-FROM python:3.11-slim as production
+FROM python:3.11-slim AS production
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \

@@ -106,7 +106,7 @@ Health check endpoint.
   "status": "healthy",
   "keys_configured": true,
   "key_count": 3,
-  "version": "1.0.0"
+  "version": "0.1.0"
 }
 ```
 

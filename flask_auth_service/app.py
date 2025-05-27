@@ -60,7 +60,7 @@ def create_app(config=None):
             "status": "healthy",
             "keys_configured": len(app.config['VALID_KEYS']) > 0,
             "key_count": len(app.config['VALID_KEYS']),
-            "version": "1.0.0"
+            "version": "0.1.0"
         })
 
     @app.route('/', methods=['GET'])
@@ -68,7 +68,7 @@ def create_app(config=None):
         """Root endpoint with service information"""
         return jsonify({
             "service": "Flask Auth Service",
-            "version": "1.0.0",
+            "version": "0.1.0",
             "endpoints": {
                 "/validate": "POST/GET - Validate Bearer token",
                 "/health": "GET - Health check",

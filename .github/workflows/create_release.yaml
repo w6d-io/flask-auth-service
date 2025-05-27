@@ -18,7 +18,6 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: ${{ github.event.pull_request.merged && contains(github.event.pull_request.labels.*.name, 'release') }}
     permissions:
       id-token: write
       contents: write

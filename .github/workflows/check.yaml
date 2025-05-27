@@ -37,32 +37,6 @@ jobs:
 
       - name: Test with pytest
         run: |
-          # Create tests directory and basic test if it doesn't exist
-          if [ ! -d "tests" ]; then
-            mkdir -p tests
-            touch tests/__init__.py
-            echo "No tests directory found, creating placeholder test"
-            cat > tests/test_basic.py << 'EOF'
-import pytest
-from flask_auth_service.app import create_app
-
-def test_app_creation():
-    """Test basic app creation."""
-    import os
-    os.environ['VALID_KEYS'] = 'test-key-1'
-    app = create_app()
-    assert app is not None
-
-def test_health_endpoint():
-    """Test health endpoint."""
-    import os
-    os.environ['VALID_KEYS'] = 'test-key-1'
-    app = create_app({'TESTING': True})
-    client = app.test_client()
-    response = client.get('/health')
-    assert response.status_code == 200
-EOF
-          fi
           # Run tests with proper path configuration
           python -m pytest tests/ --cov=flask_auth_service --cov-report=xml --cov-report=term-missing -v
         env:

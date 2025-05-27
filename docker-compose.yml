@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  flask-auth-service:
+    build: .
+    container_name: flask-auth-service
+    ports:
+      - "8083:8081"
+    environment:
+      - VALID_KEYS=key1,key2,key3,test-key-123
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8081/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    # Optional: Add volume for logs
+    volumes:
+      - ./logs:/app/logs
+    # Optional: Add network
+    networks:
+      - auth-network
+
+networks:
+  auth-network:
+    driver: bridge

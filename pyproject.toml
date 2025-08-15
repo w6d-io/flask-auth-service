@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "flask-auth-service"
-version = "1.0.0"
+dynamic = ["version"]
 description = "A simple Flask authentication service with Bearer token validation"
 readme = "README.md"
 requires-python = ">=3.8"
@@ -87,3 +87,6 @@ exclude = [
     "build",
     "dist",
 ]
+
+[tool.setuptools.dynamic]
+version = {file = "VERSION.txt"}

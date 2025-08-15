@@ -14,7 +14,7 @@ def main():
 
     args = parser.parse_args()
 
-    # Load environment file if specified
+    # Load the environment file if specified
     if args.env_file:
         from dotenv import load_dotenv
         load_dotenv(args.env_file)

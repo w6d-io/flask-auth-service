@@ -5,7 +5,7 @@ from flask_auth_service.app import create_app
 @pytest.fixture
 def app():
     """Create application for the tests."""
-    os.environ['VALID_KEYS'] = 'test-key-1,test-key-2'
+    os.environ['VALID_KEYS'] = 'test-key-1:tenant1,tenant2;test-key-2:tenant3'
     app = create_app({'TESTING': True})
     return app
 
@@ -25,7 +25,8 @@ def test_health_endpoint(client):
 def test_validate_valid_token(client):
     """Test validation with valid token."""
     response = client.post('/validate', headers={
-        'Authorization': 'Bearer test-key-1'
+        'Authorization': 'Bearer test-key-1',
+        'tenant': 'tenant1'
     })
     assert response.status_code == 200
     data = response.get_json()
@@ -34,7 +35,8 @@ def test_validate_valid_token(client):
 def test_validate_invalid_token(client):
     """Test validation with invalid token."""
     response = client.post('/validate', headers={
-        'Authorization': 'Bearer invalid-key'
+        'Authorization': 'Bearer invalid-key',
+        'tenant': 'tenant1'
     })
     assert response.status_code == 401
     data = response.get_json()
@@ -42,7 +44,9 @@ def test_validate_invalid_token(client):
 
 def test_validate_no_token(client):
     """Test validation without token."""
-    response = client.post('/validate')
+    response = client.post('/validate', headers={
+        'tenant': 'tenant1'
+    })
     assert response.status_code == 401
 
 def test_index_endpoint(client):

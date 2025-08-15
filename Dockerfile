@@ -1,5 +1,8 @@
 # Build stage
-FROM python:3.11-slim AS builder
+FROM python:3.12-slim AS builder
+
+# Build argument for version
+ARG VERSION=0.1.0
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
@@ -19,13 +22,13 @@ RUN pip install --user -r requirements.txt
 
 # Copy all necessary files for package installation
 COPY flask_auth_service/ ./flask_auth_service/
-COPY setup.py setup.cfg pyproject.toml README.md LICENSE MANIFEST.in ./
+COPY pyproject.toml README.md LICENSE MANIFEST.in ./
 
 # Install the package
 RUN pip install --user -e .
 
 # Production stage
-FROM python:3.11-slim AS production
+FROM python:3.12-slim AS production
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
@@ -60,4 +63,4 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
     CMD curl -f http://localhost:8081/health || exit 1
 
 # Default command
-CMD ["flask-auth-service", "--host", "0.0.0.0", "--port", "8081"]
+CMD ["flask-auth-service"]

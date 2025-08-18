@@ -25,8 +25,8 @@ def main():
     # Check if valid keys are configured
     if not app.config['VALID_KEYS']:
         print("ERROR: No valid keys found. Please set the VALID_KEYS environment variable.")
-        print("Example: VALID_KEYS='key1,key2,key3'")
-        print("Or create a .env file with: VALID_KEYS=key1,key2,key3")
+        print("Example: VALID_KEYS='key1:tenant1,tenant2;key2:tenant3,tenant4'")
+        print("Or create a .env file with: VALID_KEYS=key1:tenant1,tenant2;key2:tenant3,tenant4")
         sys.exit(1)
 
     print(f"Starting Flask Auth Service on {args.host}:{args.port}")
